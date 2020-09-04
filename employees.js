@@ -129,6 +129,7 @@ function addEmployee(){
       message: "Enter employee's first name: "
     },
     {
+      
       type: "input",
       name: "lastName",
       message: "Enter employee's last name: "
