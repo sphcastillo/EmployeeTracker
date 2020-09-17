@@ -1,32 +1,9 @@
 var inquirer = require("inquirer");
-var mysql = require("mysql");
+var connection = require("./config/connection.js");
 
+initiateApp();
 
-
-
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "Britney9",
-    database: "employee_trackerDB"
-});
-
-
-// Initiate MySQL Connection.
-connection.connect(function(err){
-    if(err){
-        console.error("error connecting: " + err.stack);
-        return;
-    }
-    console.log("connected as id " + connection.threadId);
-    
-    initiateApp();
-})
-
-
-
-initiateApp = function(){
+function initiateApp(){
   inquirer
   .prompt({
     type: "list",
@@ -243,6 +220,12 @@ function updateEmployeeRole(){
     }
     console.log("Employee Info: ", employeeInfo);
 
+    if(!employeeInfo.length){
+      console.log("THERE ARE NO EMPLOYEES ON THE DATABASE!");
+      return setTimeout(() => initiateApp(), 2000);
+      ;
+    }
+    // return out of this function when there are no employees in the database
   inquirer
   .prompt([
     {
@@ -262,7 +245,10 @@ function updateEmployeeRole(){
     [{role_id:res.newRoleId}, {id:res.updateEmployee}]
     , function(err, response){
     if(err){
-      throw err;
+      console.log("NOT A VALID ROLE ID");
+      return setTimeout(() => {
+        initiateApp()
+      }, 2000);
     }
     console.log("You have successfully updated your Employee role");
   })
@@ -284,6 +270,12 @@ function deleteEmployee(){
       employeeInfo.push(grabbingEmployeeInfo)
     }
     console.log("Employee Info: ", employeeInfo);
+
+    if(!employeeInfo.length){
+      console.log("THERE ARE NO EMPLOYEES ON THE DATABASE!");
+      return setTimeout(() => initiateApp(), 2000);
+      ;
+    }
 
   inquirer
   .prompt([
