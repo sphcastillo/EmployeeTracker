@@ -22,8 +22,6 @@ Email : Sphcastillo@gmail.com,
 GitHub: https://github.com/sphcastillo 
 
 
-Heroku Deployed Site:  https://stormy-reaches-73845.herokuapp.com/
-
 
 Watch a demo of this application: https://youtu.be/RKjzu8gtauw
 
